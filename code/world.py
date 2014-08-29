@@ -54,17 +54,57 @@ class World:
                     if angle == 0 or angle == 360:
                         # Upward
                         acceleration = physics.Vector2D(tail=(obj.x,obj.y), direction=(0,acceleration))
-                    if angle == 90:
+                    elif angle == 90:
                         # Left
                         acceleration = physics.Vector2D(tail=(obj.x,obj.y), direction=(-acceleration,0))
-                    if angle == 180:
+                    elif angle == 180:
                         # Downward
                         aceleration = physics.Vector2D(tail=(obj.x,obj.y), direction=(0,-acceleration))
-                    if angle == 270:
+                    elif angle == 270:
                         # Right
                         aceleration = physics.Vector2D(tail=(obj.x,obj.y), direction=(acceleration,))
 
                     # Other arbitrary angles require trigonometry "magic"
+                    if angle > 0 and angle < 90:
+                        # Calculate the Y-increment with right-triangle trig
+                        angle = 90 - angle
+                        y_inc = acceleration * (math.sin(angle))
+
+                        # Use the Pythagorean theorem to calculate the X-decrement
+                        x_dec = math.sqrt((acceleration**2) - (y_inc**2))
+
+                        # Create the vector
+                        acceleration = physics.Vector2D(tail=(obj.x,obj.y), direction=(-x_dec,y_inc))
+                    if angle > 90 and angle < 180:
+                        # Calculate the X-decrement with right-triangle trig
+                        angle = 180 - angle
+                        x_dec = acceleration * (math.sin(angle))
+
+                        # Use the Pythagorean theorem to calculate the Y-decrement
+                        y_dec = math.sqrt((acceleration**2) - (x_dec**2))
+
+                        # Create the vector
+                        acceleration = physics.Vector2D(tail=(obj.x,obj.y), direction=(-x_dec,-y_dec))
+                    if angle > 180 and angle < 270:
+                        # Calculate the X-increment with right-triangle trig
+                        angle = angle - 180
+                        x_inc = acceleration * (math.sin(angle))
+
+                        # Use the Pythagorean theorem to calculate the Y-decrement
+                        y_dec = math.sqrt((acceleration**2) - (x_inc**2))
+
+                        # Create the vector
+                        acceleration = physics.Vector2D(tail=(obj.x,obj.y), direction=(x_inc,-y_dec))
+                    if angle > 270 and angle < 360:
+                        # Calculate the X-increment with right-triangle trig
+                        angle = angle - 270
+                        x_inc = acceleration * (math.sin(angle))
+
+                        # Use the Pythagorean theorem to calculate the Y-increment
+                        y_inc = math.sqrt((acceleration**2) - (x_inc**2))
+
+                        # Create the vector
+                        acceleration = physics.Vector2D(tail=(obj.x,obj.y), direction=(x_inc,y_inc))
 
             # Get the name of the object
             name = line[0]
