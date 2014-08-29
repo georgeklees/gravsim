@@ -85,3 +85,11 @@ class Vector2D:
             self.direction[1] *= other
     def magnitude(self):
         return math.sqrt((self.direction[0] ** 2) + (self.direction[1] ** 2))
+
+class Force(Vector2D):
+    def __init__(self, pos=(0,0), acceleration=1, mass=1, angle=0):
+        # Initialize the Vector2D class
+        super().__init__(tail=pos, magnitude=acceleration, angle=angle)
+
+        # Object mass
+        self.mass = mass
