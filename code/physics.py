@@ -11,5 +11,10 @@ class Vector2:
 
         direction = (self.direction[0] + other.direction[0], self.direction[1] + other.direction[1])
         return Vector2(self.head, direction)
+    def __mul__(self, other):
+        # Scalar multiplication
+        if type(other) == float:
+            self.direction[0] *= other
+            self.direction[1] *= other
     def magnitude(self):
         return math.sqrt((self.direction[0] ** 2) + (self.direction[1] ** 2))
