@@ -42,17 +42,16 @@ class World:
             # Parsing existing object
             if line[0] == '\t':
                 # Get the name of the sub-object
-                name = line[1]
+                name = line[5]
 
                 # Object force
                 if name == "Force":
                     # Get the force acceleration and angle
-                    acceleration = float(line[2])
-                    angle = int(line[3])
+                    acceleration = float(line[6])
+                    angle = int(line[7])
 
-                    # Create a vector and the force object using it
-                    acceleration = Vector2D(tail=(obj.x,obj.y), magnitude=acceleration, angle=angle)
-                    subobj = Force(acceleration=acceleration, mass=obj.mass)
+                    # Create force for the object and add it
+                    subobj = Force(pos=(obj.x,obj.y), acceleration=acceleration, mass=obj.mass, angle=angle)
                     obj.add_subobject(subobj)
             # New object
             else:
