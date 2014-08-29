@@ -11,11 +11,5 @@ class Vector2:
 
         direction = (self.direction[0] + other.direction[0], self.direction[1] + other.direction[1])
         return Vector2(self.head, direction)
-    def __sub__(self, other):
-        if type(other) != Vector2:
-            raise Exception("Both operands of vector subtraction must be vectors")
-
-        direction = (self.direction[0] - other.direction[0], self.direction[1] - other.direction[1])
-        return Vector2(self.head, direction)
     def magnitude(self):
         return math.sqrt((self.direction[0] ** 2) + (self.direction[1] ** 2))
