@@ -1,7 +1,7 @@
 import math
 
 # 2D vector class
-class Vector2:
+class Vector2D:
     def __init__(self, tail=(0,0), direction=(0,0)):
         self.tail = tail
         self.direction = direction
@@ -10,7 +10,7 @@ class Vector2:
             raise Exception("Both operands of vector addition must be vectors")
 
         direction = (self.direction[0] + other.direction[0], self.direction[1] + other.direction[1])
-        return Vector2(self.tail, direction)
+        return Vector2D(self.tail, direction)
     def __mul__(self, other):
         # Scalar multiplication
         if type(other) == float:

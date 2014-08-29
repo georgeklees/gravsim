@@ -1,4 +1,4 @@
-import os
+import math
 
 import pyglet
 
@@ -49,6 +49,22 @@ class World:
                     # Get the force acceleration and angle
                     acceleration = float(line[2])
                     angle = int(line[3])
+
+                    # Common angle measurements
+                    if angle == 0 or angle == 360:
+                        # Upward
+                        acceleration = physics.Vector2D(tail=(obj.x,obj.y), direction=(0,acceleration))
+                    if angle == 90:
+                        # Left
+                        acceleration = physics.Vector2D(tail=(obj.x,obj.y), direction=(-acceleration,0))
+                    if angle == 180:
+                        # Downward
+                        aceleration = physics.Vector2D(tail=(obj.x,obj.y), direction=(0,-acceleration))
+                    if angle == 270:
+                        # Right
+                        aceleration = physics.Vector2D(tail=(obj.x,obj.y), direction=(acceleration,))
+
+                    # Other arbitrary angles require trigonometry "magic"
 
             # Get the name of the object
             name = line[0]
