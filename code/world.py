@@ -2,7 +2,11 @@ import math
 
 import pyglet
 
+import graphics
 import music
+
+# Current world
+current_world = None
 
 class Background(pyglet.sprite.Sprite):
     def __init__(self, img, x, y, batch, group):
@@ -14,20 +18,16 @@ class Background(pyglet.sprite.Sprite):
         pass
 
 class World:
-    def __init__(self, filename, mode):
-        # Read
-        if mode == 0:
-            # Create an object list and graphics batch for the word
-            self.objects = []
-            self.batch = pyglet.graphics.Batch()
-            
-            self.background = pyglet.graphics.OrderedGroup(0)
-            self.foreground = pyglet.graphics.OrderedGroup(1)
-            
-            self.read(filename)
-        # Create
-        elif mode == 1:
-            pass
+    def __init__(self, filename):
+        # Create an object list, force list, and graphics batch for the word
+        self.objects = []
+        self.forces = []
+        self.batch = pyglet.graphics.Batch()
+        
+        self.background = pyglet.graphics.OrderedGroup(0)
+        self.foreground = pyglet.graphics.OrderedGroup(1)
+        
+        self.read(filename)
     def read(self, filename):
         # Open the world file
         fin = open(filename, 'r')
@@ -58,27 +58,24 @@ class World:
                 # Get the name of the object
                 name = line[0]
 
-                # Create a blank object
-                obj = None
-
                 # Audio/visual stuff
                 if name == "Background":
                     obj = Background(img=pyglet.image.load(properties), x=0, y=0, batch=self.batch, group=self.background)
+                    self.objects.append(obj)
                 if name == "MusicPlayer":
                     obj = music.MusicPlayer(name=properties)
-
-                self.objects.append(obj)
+                    self.objects.append(obj)
     def play(self):
-        global current_area
+        global current_world
 
-        old_area = current_area
-        current_area = self
+        old_world = current_world
+        current_world = self
 
         window = graphics.get_current_window()
 
         # Pop all the old handlers
-        if old_area:
-            for obj in old_area.objects:
+        if old_world:
+            for obj in old_world.objects:
                 obj.on_unload()
                 window.remove_handlers(obj)
 
