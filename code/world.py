@@ -65,6 +65,10 @@ class World:
                 if name == "MusicPlayer":
                     obj = music.MusicPlayer(name=line[1])
                     self.objects.append(obj)
+
+                # Various objects
+                if name == "Sphere":
+                    # Get the 
     def play(self):
         global current_world
 
