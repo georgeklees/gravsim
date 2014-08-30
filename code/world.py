@@ -40,7 +40,7 @@ class World:
             line = line.split(' ')
 
             # Parsing existing object
-            if line[0] == '\t':
+            if line[0] == '':
                 # Get the name of the sub-object
                 name = line[5]
 
@@ -60,10 +60,10 @@ class World:
 
                 # Audio/visual stuff
                 if name == "Background":
-                    obj = Background(img=pyglet.image.load(properties), x=0, y=0, batch=self.batch, group=self.background)
+                    obj = Background(img=pyglet.image.load(line[1]), x=0, y=0, batch=self.batch, group=self.background)
                     self.objects.append(obj)
                 if name == "MusicPlayer":
-                    obj = music.MusicPlayer(name=properties)
+                    obj = music.MusicPlayer(name=line[1])
                     self.objects.append(obj)
     def play(self):
         global current_world
