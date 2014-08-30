@@ -92,4 +92,7 @@ class World:
         for obj in self.objects:
             obj.on_unload()
             window.remove_handlers(obj)
-            
+
+# Get the current world
+def get_current_world():
+    return current_world
