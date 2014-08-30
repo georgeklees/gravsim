@@ -60,7 +60,7 @@ class World:
 
                 # Audio/visual stuff
                 if name == "Background":
-                    obj = Background(img=pyglet.image.load(line[1]), x=0, y=0, batch=self.batch, group=self.background)
+                    obj = Background(img=pyglet.image.load("../sprites/" + line[1]), x=0, y=0, batch=self.batch, group=self.background)
                     self.objects.append(obj)
                 if name == "MusicPlayer":
                     obj = music.MusicPlayer(name=line[1])
@@ -68,7 +68,15 @@ class World:
 
                 # Various objects
                 if name == "Sphere":
-                    # Get the 
+                    # Get the coordinates and properties of the sphere
+                    x = float(line[1])
+                    y = float(line[2])
+                    radius = float(line[4])
+                    mass = float(line[5])
+
+                    # Create a sphere object
+                    obj = objects.Sphere(img=pyglet.image.load("../sprites/" + line[3]), x=x, y=y, radius=radius, mass=mass, batch=self.batch, group=self.foreground)
+                    self.objects.append(obj)
     def play(self):
         global current_world
 

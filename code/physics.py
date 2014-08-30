@@ -49,9 +49,9 @@ class Force(Vector2D):
 
 # Object
 class Object(pyglet.sprite.Sprite):
-    def __init__(self, img, x, y, mass, surface_area, batch):
+    def __init__(self, img, x, y, mass, surface_area, batch, group):
         # Initialize the Sprite class
-        super().__init__(img=img, x=x, y=y, batch=batch)
+        super().__init__(img=img, x=x, y=y, batch=batch, group=group)
 
         # Mass and surface area
         self.mass = mass

@@ -11,7 +11,7 @@ def update(dt):
 graphics.init_graphics()
 
 # Begin playing the title screen
-title = world.World("../worlds/music_test.txt")
+title = world.World("../worlds/test.txt")
 title.play()
 
 # Start the event loop
