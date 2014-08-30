@@ -52,7 +52,7 @@ class World:
 
                     # Create force for the object and add it
                     subobj = Force(pos=(obj.x,obj.y), acceleration=acceleration, mass=obj.mass, angle=angle)
-                    obj.add_subobject(subobj)
+                    obj.add_subobj(subobj)
             # New object
             else:
                 # Get the name of the object
