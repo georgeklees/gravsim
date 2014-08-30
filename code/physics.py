@@ -28,7 +28,7 @@ class Vector2D:
     def __mul__(self, other):
         # Scalar multiplication
         if type(other) == float:
-            new = Vector2D(tail=self.tail, magnitude=0, angle=0)
+            new = Vector2D(self.tail, 0, 0)
             new.direction[0] *= other
             new.direction[1] *= other
             return new
@@ -40,9 +40,9 @@ class Force(Vector2D):
     def __init__(self, obj, acceleration=1, mass=1, angle=0):
         # Initialize the Vector2D class
         if obj:
-            super().__init__(tail=(obj.x,obj.y), magnitude=acceleration * mass, angle=angle)
+            super().__init__((obj.x,obj.y), acceleration * mass, angle)
         else:
-            super().__init__(tail=(0,0), magnitude=acceleration * mass, angle=angle)
+            super().__init__((0,0), acceleration * mass, angle)
 
         # Object
         self.obj = obj
@@ -58,7 +58,7 @@ class Object(pyglet.sprite.Sprite):
         self.surface_area = surface_area
 
         # Current velocity
-        self.velocity = Vector2D(tail=(x,y), magnitude=0, angle=0)
+        self.velocity = Vector2D((x,y), 0, 0)
 
         # Force and subobject lists
         self.forces = []

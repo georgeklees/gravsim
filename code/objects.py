@@ -13,3 +13,5 @@ class Sphere(physics.Object):
         
         # Radius
         self.radius = radius
+    def on_load(self):
+        pass

@@ -2,6 +2,7 @@ import math
 
 import pyglet
 
+import objects
 import graphics
 import music
 
@@ -37,6 +38,7 @@ class World:
 
         # Read each object from the file
         for line in fin.readlines():
+            line = line.replace('\n','')
             line = line.split(' ')
 
             # Parsing existing object

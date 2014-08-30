@@ -1,1 +1,2 @@
 Background backgrounds/sky.png
+Sphere 257 240 spheres/basketball.png 0.75 0.624
