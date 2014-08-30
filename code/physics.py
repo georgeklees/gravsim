@@ -1,5 +1,7 @@
 import math
 
+import pyglet
+
 # 2D vector class
 class Vector2D:
     def __init__(self, tail=(0,0), *args):
@@ -31,6 +33,7 @@ class Vector2D:
     def magnitude(self):
         return math.sqrt((self.direction[0] ** 2) + (self.direction[1] ** 2))
 
+# Force acting on an object
 class Force(Vector2D):
     def __init__(self, obj, acceleration=1, mass=1, angle=0):
         # Initialize the Vector2D class
@@ -41,3 +44,20 @@ class Force(Vector2D):
 
         # Object
         self.obj = obj
+
+# Object
+class Object(pyglet.sprite.Sprite):
+    def __init__(self, img, x, y, mass, surface_area, batch):
+        # Initialize the Sprite class
+        super().__init__(img=img, x=x, y=y, batch=batch)
+
+        # Mass and surface area
+        self.mass = mass
+        self.surface_area = surface_area
+
+        # Current velocity
+        self.velocity = Vector2D(tail=(x,y), magnitude=0, angle=0)
+
+        # Force and subobject lists
+        self.forces = []
+        self.subobjects = []
