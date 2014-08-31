@@ -64,4 +64,8 @@ class Object(pyglet.sprite.Sprite):
 
         # Force and subobject lists
         self.forces = []
-        self.subobjects = []
+        self.objects = []
+
+        # Give the object a "null force"
+        null_force = Force(obj=self, acceleration=0, mass=0, angle=0)
+        self.forces.append(null_force)
