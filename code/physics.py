@@ -28,9 +28,7 @@ class Vector2D:
     def __mul__(self, other):
         # Scalar multiplication
         if type(other) == float:
-            new = Vector2D(self.tail, 0, 0)
-            new.direction[0] *= other
-            new.direction[1] *= other
+            new = Vector2D(self.tail, (self.direction[0] * other, self.direction[1] * other))
             return new
     def magnitude(self):
         return math.sqrt((self.direction[0] ** 2) + (self.direction[1] ** 2))

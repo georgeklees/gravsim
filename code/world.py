@@ -21,9 +21,10 @@ class Background(pyglet.sprite.Sprite):
 
 class World:
     def __init__(self, filename):
-        # Create an object list, force list, and graphics batch for the word
+        # Create an object list, force list, media list, and graphics batch for the word
         self.objects = []
         self.forces = []
+        self.media = []
         self.batch = pyglet.graphics.Batch()
         
         self.background = pyglet.graphics.OrderedGroup(0)
@@ -64,10 +65,10 @@ class World:
                 # Audio/visual stuff
                 if name == "Background":
                     obj = Background(img=pyglet.image.load("../sprites/" + line[1]), x=0, y=0, batch=self.batch, group=self.background)
-                    self.objects.append(obj)
+                    self.media.append(obj)
                 elif name == "MusicPlayer":
                     obj = music.MusicPlayer(name=line[1])
-                    self.objects.append(obj)
+                    self.media.append(obj)
 
                 # Various objects
                 if name == "Sphere":
@@ -89,7 +90,7 @@ class World:
 
                     # Create force for the object and add it
                     obj = physics.Force(obj=None, acceleration=acceleration, mass=1, angle=angle)
-                    self.objects.append(obj)
+                    self.forces.append(obj)
     def play(self):
         global current_world
 
