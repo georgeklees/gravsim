@@ -1,3 +1,4 @@
 Background backgrounds/sky.png
 Force 9.8 180
 Sphere 400 512 spheres/basketball.png 0.75 0.624
+    InitialForce 5 90

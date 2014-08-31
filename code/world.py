@@ -65,7 +65,7 @@ class World:
                     angle = int(line[6])
 
                     # Set the Velocity
-                    obj.velocity = physics.Vector2D((obj.x, obj.y), acceleration, angle)
+                    obj.velocity += physics.Vector2D((obj.x, obj.y), acceleration, angle)
             # New object
             else:
                 # Get the name of the object

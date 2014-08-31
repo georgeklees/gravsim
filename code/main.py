@@ -1,4 +1,5 @@
 import pyglet
+import sys
 
 import world
 import graphics
@@ -34,11 +35,15 @@ def update(dt):
 # Initialize the graphics
 graphics.init_graphics()
 
+# Load the correct world
+if len(sys.argv) > 1:
+    title = world.World("../worlds/%s.txt" % sys.argv[1])
+else:
+    title = world.World("../worlds/test.txt")
+
 # Begin playing the title screen
-title = world.World("../worlds/test.txt")
 title.play()
 
 # Start the event loop
 pyglet.clock.schedule_interval(update, 1/60)
 pyglet.app.run()
-    
