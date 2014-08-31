@@ -41,6 +41,7 @@ class World:
         # Read each object from the file
         for line in fin.readlines():
             line = line.replace('\n','')
+            line = line.replace('\r','')
             line = line.split(' ')
 
             # Parsing existing object
