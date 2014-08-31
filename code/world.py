@@ -26,10 +26,10 @@ class World:
         self.forces = []
         self.media = []
         self.batch = pyglet.graphics.Batch()
-        
+
         self.background = pyglet.graphics.OrderedGroup(0)
         self.foreground = pyglet.graphics.OrderedGroup(1)
-        
+
         self.read(filename)
     def read(self, filename):
         # Open the world file
@@ -47,17 +47,25 @@ class World:
             # Parsing existing object
             if line[0] == '':
                 # Get the name of the sub-object
-                name = line[5]
+                name = line[4]
 
                 # Object force
                 if name == "Force":
                     # Get the force acceleration and angle
-                    acceleration = float(line[6])
-                    angle = int(line[7])
+                    acceleration = float(line[5])
+                    angle = int(line[6])
 
                     # Create force for the object and add it
                     subobj = physics.Force(obj=obj, acceleration=acceleration, mass=obj.mass, angle=angle)
                     obj.forces.append(subobj)
+                # Initial Force (ie. thrown)
+                elif name == "InitialForce":
+                    # Get the acceleration and angle
+                    acceleration = float(line[5])
+                    angle = int(line[6])
+
+                    # Set the Velocity
+                    obj.velocity = physics.Vector2D((obj.x, obj.y), acceleration, angle)
             # New object
             else:
                 # Get the name of the object
@@ -115,7 +123,7 @@ class World:
         graphics.set_current_batch(self.batch)
     def end(self):
         window = graphics.get_current_window()
-        
+
         for obj in self.objects:
             obj.on_unload()
             window.remove_handlers(obj)
