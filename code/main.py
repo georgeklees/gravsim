@@ -15,9 +15,14 @@ def update(dt):
         for force in obj.forces:
             net_force += force
 
-        # Now sum each environmental force
+        # Now sum each world force
         for force in current_world.forces:
             net_force += (force * obj.mass)
+
+        # Record the force the object exerts
+        obj.exerted_force = net_force
+
+        # Sum each colliding force
 
         # Add the net force to the object's velocity
         obj.velocity += ((net_force / obj.mass) / 60)

@@ -62,8 +62,9 @@ class Object(pyglet.sprite.Sprite):
         self.mass = mass
         self.surface_area = surface_area
 
-        # Current velocity
+        # Current velocity and force exerted
         self.velocity = Vector2D((x,y), 0, 0)
+        self.exerted_force = None
 
         # Force and subobject lists
         self.forces = []
