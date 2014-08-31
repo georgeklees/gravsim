@@ -20,19 +20,19 @@ class Vector2D:
             # Calculate the direction from it
             self.direction = (magnitude * math.cos(angle), magnitude * math.sin(angle))
     def __add__(self, other):
-        if type(other) != Vector2D:
+        if not issubclass(type(other), Vector2D):
             raise Exception("Both operands of vector addition must be vectors")
 
         direction = (self.direction[0] + other.direction[0], self.direction[1] + other.direction[1])
         return Vector2D(self.tail, direction)
     def __mul__(self, other):
         # Scalar multiplication
-        if type(other) == float:
+        if type(other) == float or type(other) == int:
             new = Vector2D(self.tail, (self.direction[0] * other, self.direction[1] * other))
             return new
-    def __div__(self, other):
+    def __truediv__(self, other):
         # Scalar division
-        if type(other) == float:
+        if type(other) == float or type(other) == int:
             new = Vector2D(self.tail, (self.direction[0] / other, self.direction[1] / other))
             return new
     def magnitude(self):

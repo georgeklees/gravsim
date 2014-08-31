@@ -12,15 +12,19 @@ def update(dt):
     for obj in current_world.objects:
         # Sum each of the object forces themselves
         net_force = obj.forces[0]
-        for force in obj.forces[1:]:
+        for force in obj.forces:
             net_force += force
 
         # Now sum each environmental force
         for force in current_world.forces:
             net_force += (force * obj.mass)
 
-        # Divide by the object's mass to get the acceleration vector
-        net_force = net_force / obj.mass
+        # Add the net force to the object's velocity
+        obj.velocity += ((net_force / obj.mass) / 60)
+
+        # Use the velocity to change X and Y
+        obj.x += obj.velocity.direction[0]
+        obj.y += obj.velocity.direction[1]
 
 # Initialize the graphics
 graphics.init_graphics()
