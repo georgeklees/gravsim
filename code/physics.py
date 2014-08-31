@@ -30,6 +30,11 @@ class Vector2D:
         if type(other) == float:
             new = Vector2D(self.tail, (self.direction[0] * other, self.direction[1] * other))
             return new
+    def __div__(self, other):
+        # Scalar division
+        if type(other) == float:
+            new = Vector2D(self.tail, (self.direction[0] / other, self.direction[1] / other))
+            return new
     def magnitude(self):
         return math.sqrt((self.direction[0] ** 2) + (self.direction[1] ** 2))
 

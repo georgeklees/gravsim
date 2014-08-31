@@ -19,6 +19,9 @@ def update(dt):
         for force in current_world.forces:
             net_force += (force * obj.mass)
 
+        # Divide by the object's mass to get the acceleration vector
+        net_force = net_force / obj.mass
+
 # Initialize the graphics
 graphics.init_graphics()
 
