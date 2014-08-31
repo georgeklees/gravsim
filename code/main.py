@@ -19,9 +19,6 @@ def update(dt):
         for force in current_world.forces:
             net_force += (force * obj.mass)
 
-        # We have the net force
-        print(net_force.direction)
-
 # Initialize the graphics
 graphics.init_graphics()
 
