@@ -46,6 +46,8 @@ class Force(Vector2D):
 
         # Object
         self.obj = obj
+    def on_load(self):
+        pass
 
 # Object
 class Object(pyglet.sprite.Sprite):

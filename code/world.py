@@ -2,6 +2,7 @@ import math
 
 import pyglet
 
+import physics
 import objects
 import graphics
 import music
@@ -53,8 +54,8 @@ class World:
                     angle = int(line[7])
 
                     # Create force for the object and add it
-                    subobj = Force(pos=(obj.x,obj.y), acceleration=acceleration, mass=obj.mass, angle=angle)
-                    obj.add_subobj(subobj)
+                    subobj = physics.Force(obj=obj, acceleration=acceleration, mass=obj.mass, angle=angle)
+                    obj.forces.append(subobj)
             # New object
             else:
                 # Get the name of the object
@@ -64,7 +65,7 @@ class World:
                 if name == "Background":
                     obj = Background(img=pyglet.image.load("../sprites/" + line[1]), x=0, y=0, batch=self.batch, group=self.background)
                     self.objects.append(obj)
-                if name == "MusicPlayer":
+                elif name == "MusicPlayer":
                     obj = music.MusicPlayer(name=line[1])
                     self.objects.append(obj)
 
@@ -78,6 +79,16 @@ class World:
 
                     # Create a sphere object
                     obj = objects.Sphere(img=pyglet.image.load("../sprites/" + line[3]), x=x, y=y, radius=radius, mass=mass, batch=self.batch, group=self.foreground)
+                    self.objects.append(obj)
+
+                # Forces
+                if name == "Force":
+                    # Get the force acceleration and angle
+                    acceleration = float(line[1])
+                    angle = int(line[2])
+
+                    # Create force for the object and add it
+                    obj = physics.Force(obj=None, acceleration=acceleration, mass=1, angle=angle)
                     self.objects.append(obj)
     def play(self):
         global current_world
