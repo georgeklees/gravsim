@@ -1,7 +1,7 @@
 import pyglet
 
 # Window, objects, and batch
-window = pyglet.window.Window(caption="Gravity Simulator", width=640, height=480)
+window = pyglet.window.Window(caption="Gravity Simulator", width=800, height=600)
 batch = None
 
 # Window events
