@@ -76,7 +76,7 @@ class Object(pyglet.sprite.Sprite):
 
         # Current velocity and force exerted
         self.velocity = Vector2D((x,y), 0, 0)
-        self.exerted_force = None
+        self.exerted_force = Vector2D((0,0), 0, 0)
 
         # Force and subobject lists
         self.forces = []
