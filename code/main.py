@@ -1,5 +1,6 @@
 import pyglet
 import sys
+import math
 
 import world
 import graphics
@@ -15,7 +16,18 @@ def update(dt):
     collisions = collision.detect_collisions(current_world.objects)
     collided = collision.collided_objects(collisions)
     collisions = dict(collisions)
-    
+
+    # Collision Handler
+    for obj in collided:
+        tobj = collisions[obj]
+        # Head on collision
+        print(obj.velocity, tobj.velocity)
+        if physics.almost_equal(obj.velocity.angle, -tobj.velocity.angle):
+            print("Head-On collision detected")
+            m1, m2 = obj.mass, tobj.mass
+            obj.velocity = (m1 - m2) / (m1 + m2) * obj.velocity
+            tobj.velocity = (2 * m1) / (m1 + m2) * tobj.velocity
+
     # Move each object in the world
     for obj in current_world.objects:
         # Sum each of the object forces themselves
@@ -27,19 +39,12 @@ def update(dt):
         for force in current_world.forces:
             net_force += (force * obj.mass)
 
-        # Sum each colliding force
-        if obj in collided:
-            net_force += collisions[obj].exerted_force
-
         # Add the net force to the object's velocity
         obj.velocity += ((net_force / obj.mass) / 60)
 
         # Use the velocity to change X and Y
         obj.x += obj.velocity.direction[0]
         obj.y += obj.velocity.direction[1]
-
-        # Change the object's exerted force
-        obj.exerted_force = ((obj.velocity * obj.mass) * 60) - obj.exerted_force
 
 # Initialize the graphics
 graphics.init_graphics()
