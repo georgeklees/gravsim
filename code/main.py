@@ -39,7 +39,7 @@ def update(dt):
         obj.y += obj.velocity.direction[1]
 
         # Change the object's exerted force
-        obj.exerted_force = (obj.velocity * obj.mass) - obj.exerted_force
+        obj.exerted_force = ((obj.velocity * obj.mass) * 60) - obj.exerted_force
 
 # Initialize the graphics
 graphics.init_graphics()
