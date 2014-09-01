@@ -27,9 +27,6 @@ def update(dt):
         for force in current_world.forces:
             net_force += (force * obj.mass)
 
-        # Record the force the object exerts (FIX THIS TO USE VELOCITY DIFFERENCE)
-        obj.exerted_force = net_force
-
         # Sum each colliding force
         if obj in collided:
             net_force += collisions[obj].exerted_force
@@ -40,6 +37,9 @@ def update(dt):
         # Use the velocity to change X and Y
         obj.x += obj.velocity.direction[0]
         obj.y += obj.velocity.direction[1]
+
+        # Change the object's exerted force
+        obj.exerted_force = (obj.velocity * obj.mass) - obj.exerted_force
 
 # Initialize the graphics
 graphics.init_graphics()

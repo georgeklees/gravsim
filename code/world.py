@@ -58,14 +58,15 @@ class World:
                     # Create force for the object and add it
                     subobj = physics.Force(obj=obj, acceleration=acceleration, mass=obj.mass, angle=angle)
                     obj.forces.append(subobj)
-                # Initial Force (ie. thrown)
-                elif name == "InitialForce":
-                    # Get the acceleration and angle
-                    acceleration = float(line[5])
+                # Initial velocity (like being thrown)
+                elif name == "InitialVelocity":
+                    # Get the magnitude and angle
+                    magnitude = float(line[5])
                     angle = int(line[6])
 
-                    # Set the Velocity
-                    obj.velocity += physics.Vector2D((obj.x, obj.y), acceleration, angle)
+                    # Set the velocity and exerted force
+                    obj.velocity = physics.Vector2D((obj.x, obj.y), acceleration, angle)
+                    obj.exerted_force = obj.velocity * obj.mass
             # New object
             else:
                 # Get the name of the object
