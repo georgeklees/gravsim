@@ -25,6 +25,12 @@ class Vector2D:
 
         direction = (self.direction[0] + other.direction[0], self.direction[1] + other.direction[1])
         return Vector2D(self.tail, direction)
+    def __sub__(self, other):
+        if not issubclass(type(other), Vector2D):
+            raise Exception("Both operands of vector subtraction must be vectors")
+
+        direction = (self.direction[0] - other.direction[0], self.direction[1] - other.direction[1])
+        return Vector2D(self.tail, direction)
     def __mul__(self, other):
         # Scalar multiplication
         if type(other) == float or type(other) == int:
