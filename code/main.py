@@ -38,8 +38,10 @@ def update(dt):
         obj.y += obj.velocity.direction[1]
 
         if obj in collided:
-            collisions[obj].velocity += obj.velocity
-            obj.velocity = physics.Vector2D((obj.x, obj.y), (0, 0))
+            net_force = obj.velocity * obj.mass + \
+                collisions[obj].velocity * collisions[obj].mass
+            obj.velocity = net_force / obj.mass / 2
+            collisions[obj].velocity = net_force / collisions[obj].mass / 2
 
 # Initialize the graphics
 graphics.init_graphics()
