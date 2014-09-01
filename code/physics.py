@@ -35,6 +35,12 @@ class Vector2D:
         if type(other) == float or type(other) == int:
             new = Vector2D(self.tail, (self.direction[0] / other, self.direction[1] / other))
             return new
+    def __str__(self):
+        # Convert to string (for debugging)
+        return str(self.direction)
+    def __hash__(self):
+        # So this can be used as a dict key
+        return self.direction[0] + self.direction[1] * 100
     def magnitude(self):
         return math.sqrt((self.direction[0] ** 2) + (self.direction[1] ** 2))
 
@@ -73,3 +79,6 @@ class Object(pyglet.sprite.Sprite):
         # Give the object a "null force"
         null_force = Force(obj=self, acceleration=0, mass=0, angle=0)
         self.forces.append(null_force)
+
+    def __hash__(self):
+        return id(self)

@@ -3,12 +3,17 @@ import sys
 
 import world
 import graphics
+import collision
+import physics
 
 # Update event loop
 def update(dt):
     # Get the current world
     current_world = world.get_current_world()
 
+    collisions = collision.detect_collisions(current_world.objects)
+    collided = collision.collided_objects(collisions)
+    collisions = dict(collisions)
     # Move each object in the world
     for obj in current_world.objects:
         # Sum each of the object forces themselves
@@ -31,6 +36,10 @@ def update(dt):
         # Use the velocity to change X and Y
         obj.x += obj.velocity.direction[0]
         obj.y += obj.velocity.direction[1]
+
+        if obj in collided:
+            collisions[obj].velocity += obj.velocity
+            obj.velocity = physics.Vector2D((obj.x, obj.y), (0, 0))
 
 # Initialize the graphics
 graphics.init_graphics()
