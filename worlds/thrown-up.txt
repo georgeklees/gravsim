@@ -1,4 +1,4 @@
 Background backgrounds/sky.png
 Gravity 9.8 180
 Sphere 700 300 spheres/basketball.png 0.75 0.624
-    InitialGravity 10 30
+    InitialVelocity 10 30
