@@ -12,21 +12,8 @@ def update(dt):
     # Get the current world
     current_world = world.get_current_world()
 
-    # Detect the collisions of each object
-    collisions = collision.detect_collisions(current_world.objects)
-    collided = collision.collided_objects(collisions)
-    collisions = dict(collisions)
-
-    # Collision Handler
-    for obj in collided:
-        tobj = collisions[obj]
-        # Head on collision
-        print(obj.velocity, tobj.velocity)
-        if physics.almost_equal(obj.velocity.angle, -tobj.velocity.angle):
-            print("Head-On collision detected")
-            m1, m2 = obj.mass, tobj.mass
-            obj.velocity = (m1 - m2) / (m1 + m2) * obj.velocity
-            tobj.velocity = (2 * m1) / (m1 + m2) * tobj.velocity
+    # Handle collisions
+    collision.handle_collisions(current_world.objects)
 
     # Move each object in the world
     for obj in current_world.objects:

@@ -4,7 +4,7 @@ import pyglet
 
 # 2D vector class
 class Vector2D:
-    def __init__(self, tail, *args):
+    def __init__(self, tail=(0,0), *args):
         # Set the starting coordinates of the vector
         self.tail = tail
 
