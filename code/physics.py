@@ -1,5 +1,4 @@
 import math
-
 import pyglet
 
 # 2D vector class
@@ -56,15 +55,15 @@ class Vector2D:
             return new
     def __str__(self):
         # Convert to string (for debugging)
-        return str(self.direction) + " " + str(self.angle)
+        return "(%f.4, %f.4) at %d degrees" % (self.direction[0], self.direction[1], self.angle)
     def __hash__(self):
         # So this can be used as a dict key
         return id(self)
     def magnitude(self):
         return math.sqrt((self.direction[0] ** 2) + (self.direction[1] ** 2))
 
-# Force acting on an object
-class Force(Vector2D):
+# Gravity acting on an object
+class Gravity(Vector2D):
     def __init__(self, obj, acceleration=1, mass=1, angle=0):
         # Initialize the Vector2D class
         if obj:
@@ -76,6 +75,30 @@ class Force(Vector2D):
         self.obj = obj
     def on_load(self):
         pass
+
+# Drag acting upon an object
+class Drag(Vector2D):
+    def __init__(self, obj, coefficent=.47):
+        super().__init__((0, 0), 0, 0)
+
+        self.obj = obj
+        self.coefficent = coefficent
+    def __add__(self, target):
+        # We need to calculate the actual drag while adding
+        dx = self.coefficent * (self.obj.density * self.obj.velocity.direction[0] ** 2) / 2 * self.obj.reference_area
+        dy = self.coefficent * (self.obj.density * self.obj.velocity.direction[1] ** 2) / 2 * self.obj.reference_area
+        return self._add(target) - Vector2D((0, 0), -dx, -dy)
+
+    def __radd__(self, target):
+        return self + target
+
+    def _add(self, other):
+        if not issubclass(type(other), Vector2D):
+            raise Exception("Both operands of vector addition must be vectors")
+
+        direction = (self.direction[0] + other.direction[0], self.direction[1] + other.direction[1])
+        return Vector2D(self.tail, direction)
+
 
 # Object
 class Object(pyglet.sprite.Sprite):
@@ -96,8 +119,8 @@ class Object(pyglet.sprite.Sprite):
         self.objects = []
 
         # Give the object a "null force"
-        null_force = Force(obj=self, acceleration=0, mass=0, angle=0)
-        self.forces.append(null_force)
+#        null_force = Force(obj=self, acceleration=0, mass=0, angle=0)
+#        self.forces.append(null_force)
 
     def __hash__(self):
         return id(self)

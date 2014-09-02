@@ -1,5 +1,5 @@
 Background backgrounds/sky.png
-Force 9.8 180
+Gravity 9.8 180
 Sphere 400 300 spheres/basketball.png 0.75 0.624
     InitialVelocity 10 0
 Sphere 400 500 spheres/basketball.png 0.75 0.624

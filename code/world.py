@@ -30,6 +30,8 @@ class World:
         self.background = pyglet.graphics.OrderedGroup(0)
         self.foreground = pyglet.graphics.OrderedGroup(1)
 
+        self.drag_enabled = None
+
         self.read(filename)
     def read(self, filename):
         # Open the world file
@@ -50,13 +52,13 @@ class World:
                 name = line[4]
 
                 # Object force
-                if name == "Force":
+                if name == "Gravity":
                     # Get the force acceleration and angle
                     acceleration = float(line[5])
                     angle = int(line[6])
 
                     # Create force for the object and add it
-                    subobj = physics.Force(obj=obj, acceleration=acceleration, mass=obj.mass, angle=angle)
+                    subobj = physics.Gravity(obj=obj, acceleration=acceleration, mass=obj.mass, angle=angle)
                     obj.forces.append(subobj)
                 # Initial velocity (like being thrown)
                 elif name == "InitialVelocity":
@@ -93,16 +95,23 @@ class World:
                     self.objects.append(obj)
 
                 # Forces
-                if name == "Force":
+                if name == "Gravity":
                     # Get the force acceleration and angle
                     acceleration = float(line[1])
                     angle = int(line[2])
 
                     # Create force for the object and add it
-                    obj = physics.Force(obj=None, acceleration=acceleration, mass=1, angle=angle)
+                    obj = physics.Gravity(obj=None, acceleration=acceleration, mass=1, angle=angle)
                     self.forces.append(obj)
+                if name == "Drag":
+                    self.drag_enabled = float(line[1])
     def play(self):
         global current_world
+
+        # Check for Drag and enable
+        if self.drag_enabled:
+            for obj in self.objects:
+                obj.forces.append(physics.Drag(obj, self.drag_enabled))
 
         old_world = current_world
         current_world = self

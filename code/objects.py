@@ -13,5 +13,9 @@ class Sphere(physics.Object):
 
         # Radius
         self.radius = radius
+        # Calculations for drag
+        self.volume = 4/3 * math.pi * (self.height / 2) ** 3
+        self.density = self.mass / self.volume
+        self.reference_area = 2 * math.pi * (self.height / 2) ** 2
     def on_load(self):
         pass
