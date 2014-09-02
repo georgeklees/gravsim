@@ -53,6 +53,8 @@ class Vector2D:
         if type(other) == float or type(other) == int:
             new = Vector2D(self.tail, (self.direction[0] / other, self.direction[1] / other))
             return new
+    def __neg__(self):
+        return Vector2D(self.tail, -self.direction[0], -self.direction[1])
     def __str__(self):
         # Convert to string (for debugging)
         return "(%f.4, %f.4) at %d degrees" % (self.direction[0], self.direction[1], self.angle)
@@ -118,10 +120,8 @@ class Object(pyglet.sprite.Sprite):
         self.forces = []
         self.objects = []
 
-        # Give the object a "null force"
-#        null_force = Force(obj=self, acceleration=0, mass=0, angle=0)
-#        self.forces.append(null_force)
-
+        # Detect which objects it has collided with
+        self.collided_objects = []
     def __hash__(self):
         return id(self)
 

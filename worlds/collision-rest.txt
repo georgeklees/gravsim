@@ -1,5 +1,4 @@
 Background backgrounds/wood.png
 Sphere 200 400 spheres/basketball.png 0.75 0.624
-    InitialVelocity 2 270
 Sphere 600 400 spheres/basketball.png 0.75 0.624
-    InitialVelocity 1 90
+    InitialVelocity 10 90

@@ -18,17 +18,23 @@ def collided_objects(collisions):
     # Note: only returns the first to prevent duplicate handling
     return set([collision[0] for collision in collisions])
 
-def handle_collisions(objects):
-    collisions = detect_collisions(objects)
-    collided = collided_objects(collisions)
-    collisions = dict(collisions)
-
-    for obj in collided:
+def handle_collision(obj, collided, collisions):
+    if obj in collided:
         tobj = collisions[obj]
-        # Head on collision
-        print(obj.velocity, tobj.velocity)
-        if physics.almost_equal(obj.velocity.angle, -tobj.velocity.angle):
-            print("Head-On collision detected")
-            m1, m2 = obj.mass, tobj.mass
-            obj.velocity = (m1 - m2) / (m1 + m2) * obj.velocity
-            tobj.velocity = (2 * m1) / (m1 + m2) * tobj.velocity
+        if not (obj in tobj.collided_objects or tobj in obj.collided_objects):
+            obj.collided_objects.append(tobj)
+            tobj.collided_objects.append(obj)
+            if physics.almost_equal(tobj.velocity.magnitude(), 0):
+                tobj.velocity = obj.velocity * obj.mass / tobj.mass
+                obj.velocity = physics.Vector2D((0, 0), 0, 0)
+            elif physics.almost_equal(obj.velocity.magnitude(), 0):
+                obj.velocity = tobj.velocity * tobj.mass / obj.mass
+                tobj.velocity = physics.Vector2D((0, 0), 0, 0)
+            # Head on collision
+            elif physics.almost_equal(obj.velocity.angle, tobj.velocity.angle):
+                print("Head-On collision detected")
+                m1, m2 = obj.mass, tobj.mass
+                obj.velocity = (m1 - m2) / (m1 + m2) * -obj.velocity
+                tobj.velocity = (2 * m1) / (m1 + m2) * -tobj.velocity
+            return True
+    return False
