@@ -18,7 +18,7 @@ def update(dt):
     # Move each object in the world
     for obj in current_world.objects:
         # Sum each of the object forces themselves
-        net_force = obj.forces[0]
+        net_force = physics.Vector2D((0, 0), 0, 0)
         for force in obj.forces:
             net_force += force
 
